@@ -1362,6 +1362,195 @@
         color: black;
       }
 
+      /* Security Page Styles */
+      .security-page {
+        background-color: #f5f5f5;
+        padding: 15px;
+      }
+
+      .security-title {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .security-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .toggle-2fa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .info-text {
+        color: #888;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      /* Wallet Settings Styles */
+      .wallet-settings-page {
+        background-color: #f5f5f5;
+        padding: 15px;
+      }
+
+      .wallet-settings-title {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .wallet-settings-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .setup-wallet h3 {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .setup-wallet p {
+        text-align: center;
+        color: #888;
+        margin-bottom: 20px;
+      }
+
+      .recovery-phrase {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        word-break: break-all;
+        position: relative;
+      }
+
+      .copy-btn {
+        background-color: #01ff77;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-top: 5px;
+        cursor: pointer;
+      }
+
+      .wallet-info h3 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .wallet-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wallet-address {
+        font-family: monospace;
+        font-size: 14px;
+      }
+
+      .status-active {
+        color: #01ff77;
+        font-weight: bold;
+      }
+
+      .wallet-actions {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .wallet-action-btn {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .wallet-action-btn:hover {
+        background-color: #f5f5f5;
+      }
+
+      .wallet-action-btn.danger {
+        color: #ff4444;
+        border-color: #ffdddd;
+      }
+
+      .wallet-action-btn.danger:hover {
+        background-color: #ffeeee;
+      }
+
+      /* Toggle switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: #01ff77;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+
       /* Адаптивные стили */
       @media (max-width: 480px) {
         .home-page .nft-content {
@@ -1782,14 +1971,14 @@
               </div>
               <i class="fas fa-chevron-right"></i>
             </div>
-            <div class="account-item">
+            <div class="account-item" @click="currentPage = 'security'">
               <div>
                 <i class="fas fa-lock"></i>
                 <span>Security</span>
               </div>
               <i class="fas fa-chevron-right"></i>
             </div>
-            <div class="account-item">
+            <div class="account-item" @click="currentPage = 'wallet-settings'">
               <div>
                 <i class="fas fa-wallet"></i>
                 <span>Wallet settings</span>
@@ -1802,6 +1991,158 @@
                 <span>Logout</span>
               </div>
               <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Новая страница Security -->
+        <div
+          class="page security-page"
+          :class="{active: currentPage === 'security'}"
+        >
+          <div class="profile-header">
+            <div class="back-btn" @click="currentPage = 'profile'">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <h2 class="security-title">Security Settings</h2>
+          </div>
+
+          <div class="security-container">
+            <div class="form-section">
+              <span class="section-title">Change Password</span>
+              <div class="form-group">
+                <label>Current Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter current password"
+                  v-model="currentPassword"
+                />
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter new password"
+                  v-model="newPassword"
+                />
+              </div>
+              <div class="form-group">
+                <label>Confirm New Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm new password"
+                  v-model="confirmNewPassword"
+                />
+              </div>
+              <button class="save-btn" @click="changePassword">
+                Save Changes
+              </button>
+            </div>
+
+            <div class="form-section">
+              <span class="section-title">Two-Factor Authentication</span>
+              <div class="toggle-2fa">
+                <span>Enable 2FA</span>
+                <label class="switch">
+                  <input type="checkbox" v-model="twoFactorEnabled" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="info-text">
+                Two-factor authentication adds an extra layer of security to
+                your account.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Новая страница Wallet Settings -->
+        <div
+          class="page wallet-settings-page"
+          :class="{active: currentPage === 'wallet-settings'}"
+        >
+          <div class="profile-header">
+            <div class="back-btn" @click="currentPage = 'profile'">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <h2 class="wallet-settings-title">Wallet Settings</h2>
+          </div>
+
+          <div class="wallet-settings-container">
+            <div v-if="!walletCreated" class="setup-wallet">
+              <h3>Set Up Your Wallet</h3>
+              <p>To use NFT features, you need to create a secure wallet.</p>
+
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  v-model="walletEmail"
+                />
+              </div>
+              <div class="form-group">
+                <label>Wallet Password</label>
+                <input
+                  type="password"
+                  placeholder="Create wallet password"
+                  v-model="walletPassword"
+                />
+              </div>
+              <div class="form-group">
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm wallet password"
+                  v-model="confirmWalletPassword"
+                />
+              </div>
+              <div class="form-group">
+                <label>Recovery Phrase</label>
+                <div class="recovery-phrase" v-if="recoveryPhrase">
+                  {{ recoveryPhrase }}
+                  <button class="copy-btn" @click="copyRecoveryPhrase">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div v-else>
+                  <p>This will be generated after wallet creation</p>
+                </div>
+              </div>
+              <button class="create-wallet-btn" @click="createWallet">
+                Create Wallet
+              </button>
+            </div>
+
+            <div v-else class="wallet-info">
+              <h3>Your Wallet Information</h3>
+              <div class="wallet-detail">
+                <span>Wallet Address:</span>
+                <span class="wallet-address">{{ walletAddress }}</span>
+                <button class="copy-btn" @click="copyWalletAddress">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              <div class="wallet-detail">
+                <span>Connected Email:</span>
+                <span>{{ walletEmail }}</span>
+              </div>
+              <div class="wallet-detail">
+                <span>Wallet Status:</span>
+                <span class="status-active">Active</span>
+              </div>
+
+              <div class="wallet-actions">
+                <button class="wallet-action-btn" @click="showRecoveryPhrase">
+                  <i class="fas fa-key"></i> Show Recovery Phrase
+                </button>
+                <button class="wallet-action-btn" @click="changeWalletPassword">
+                  <i class="fas fa-lock"></i> Change Password
+                </button>
+                <button class="wallet-action-btn danger" @click="resetWallet">
+                  <i class="fas fa-trash"></i> Reset Wallet
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2037,6 +2378,21 @@
           const alerts = ref([]);
           const searchQuery = ref("");
           const newComment = ref("");
+
+          // Security
+          const currentPassword = ref("");
+          const newPassword = ref("");
+          const confirmNewPassword = ref("");
+          const twoFactorEnabled = ref(false);
+
+          // Wallet Settings
+          const walletCreated = ref(false);
+          const walletEmail = ref("");
+          const walletPassword = ref("");
+          const confirmWalletPassword = ref("");
+          const recoveryPhrase = ref("");
+          const walletAddress = ref("");
+          const showPhrase = ref(false);
 
           // Инициализация данных в LocalStorage
           const initLocalStorage = () => {
@@ -2493,10 +2849,190 @@
             document.getElementById("nft-upload").value = "";
           };
 
+          // ⚙️ Security: смена пароля
+          const changePassword = () => {
+            if (newPassword.value !== confirmNewPassword.value) {
+              alert("New passwords don't match");
+              return;
+            }
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const userIndex = users.findIndex(
+              (u) => u.id === currentUser.value.id
+            );
+
+            if (userIndex !== -1) {
+              if (users[userIndex].password !== currentPassword.value) {
+                alert("Current password is incorrect");
+                return;
+              }
+
+              users[userIndex].password = newPassword.value;
+              localStorage.setItem("users", JSON.stringify(users));
+              currentUser.value.password = newPassword.value;
+
+              alert("Password changed successfully");
+              currentPassword.value = "";
+              newPassword.value = "";
+              confirmNewPassword.value = "";
+
+              addAlert(
+                "Password Changed",
+                "Your account password has been updated successfully."
+              );
+            }
+          };
+
+          // ⚙️ Wallet: создание
+          const createWallet = () => {
+            if (walletPassword.value !== confirmWalletPassword.value) {
+              alert("Passwords don't match");
+              return;
+            }
+
+            if (!walletEmail.value) {
+              alert("Please enter your email");
+              return;
+            }
+
+            const phrases = [
+              "apple",
+              "banana",
+              "cherry",
+              "date",
+              "elderberry",
+              "fig",
+              "grape",
+              "honeydew",
+              "kiwi",
+              "lemon",
+              "mango",
+              "nectarine",
+            ];
+            recoveryPhrase.value = phrases
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 12)
+              .join(" ");
+
+            walletAddress.value =
+              "0x" +
+              Array.from({ length: 40 }, () =>
+                Math.floor(Math.random() * 16).toString(16)
+              ).join("");
+
+            walletCreated.value = true;
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const userIndex = users.findIndex(
+              (u) => u.id === currentUser.value.id
+            );
+
+            if (userIndex !== -1) {
+              users[userIndex].wallet = {
+                email: walletEmail.value,
+                password: walletPassword.value,
+                recoveryPhrase: recoveryPhrase.value,
+                address: walletAddress.value,
+                createdAt: new Date().toISOString(),
+              };
+
+              localStorage.setItem("users", JSON.stringify(users));
+              currentUser.value.wallet = users[userIndex].wallet;
+            }
+
+            addAlert(
+              "Wallet Created",
+              "Your NFT wallet has been created successfully."
+            );
+          };
+
+          const copyRecoveryPhrase = () => {
+            navigator.clipboard.writeText(recoveryPhrase.value);
+            alert("Recovery phrase copied to clipboard");
+          };
+
+          const copyWalletAddress = () => {
+            navigator.clipboard.writeText(walletAddress.value);
+            alert("Wallet address copied to clipboard");
+          };
+
+          const showRecoveryPhrase = () => {
+            alert(
+              `Your recovery phrase is:\n\n${currentUser.value.wallet.recoveryPhrase}\n\nKeep it safe!`
+            );
+          };
+
+          const changeWalletPassword = () => {
+            const newPass = prompt("Enter new wallet password:");
+            if (newPass) {
+              const confirmPass = prompt("Confirm new wallet password:");
+
+              if (newPass === confirmPass) {
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                const userIndex = users.findIndex(
+                  (u) => u.id === currentUser.value.id
+                );
+
+                if (userIndex !== -1 && users[userIndex].wallet) {
+                  users[userIndex].wallet.password = newPass;
+                  localStorage.setItem("users", JSON.stringify(users));
+                  currentUser.value.wallet.password = newPass;
+                  alert("Wallet password changed successfully");
+                }
+              } else {
+                alert("Passwords don't match");
+              }
+            }
+          };
+
+          const resetWallet = () => {
+            if (
+              confirm(
+                "Are you sure you want to reset your wallet? This will delete all your NFTs and wallet data."
+              )
+            ) {
+              const users = JSON.parse(localStorage.getItem("users")) || [];
+              const userIndex = users.findIndex(
+                (u) => u.id === currentUser.value.id
+              );
+
+              if (userIndex !== -1) {
+                delete users[userIndex].wallet;
+                localStorage.setItem("users", JSON.stringify(users));
+
+                let walletNFTs =
+                  JSON.parse(localStorage.getItem("wallet")) || [];
+                walletNFTs = walletNFTs.filter(
+                  (nft) => nft.ownerId !== currentUser.value.id
+                );
+                localStorage.setItem("wallet", JSON.stringify(walletNFTs));
+
+                currentUser.value.wallet = null;
+                walletCreated.value = false;
+                walletEmail.value = "";
+                walletPassword.value = "";
+                confirmWalletPassword.value = "";
+                recoveryPhrase.value = "";
+                walletAddress.value = "";
+
+                addAlert(
+                  "Wallet Reset",
+                  "Your wallet has been reset successfully."
+                );
+              }
+            }
+          }; // ✅ ЗАКРЫЛИ resetWallet
+
           // Инициализация приложения
           onMounted(() => {
             initLocalStorage();
             loadData();
+
+            if (currentUser.value.wallet) {
+              walletCreated.value = true;
+              walletEmail.value = currentUser.value.wallet.email;
+              walletAddress.value = currentUser.value.wallet.address;
+            }
 
             // Проверяем, авторизован ли пользователь
             const loggedInUserId = localStorage.getItem("loggedInUserId");
@@ -2563,6 +3099,27 @@
             addTrait,
             createNFT,
             toggleFlip,
+            // Security
+            currentPassword,
+            newPassword,
+            confirmNewPassword,
+            twoFactorEnabled,
+            changePassword,
+
+            // Wallet Settings
+            walletCreated,
+            walletEmail,
+            walletPassword,
+            confirmWalletPassword,
+            recoveryPhrase,
+            walletAddress,
+            showPhrase,
+            createWallet,
+            copyRecoveryPhrase,
+            copyWalletAddress,
+            showRecoveryPhrase,
+            changeWalletPassword,
+            resetWallet,
           };
         },
       }).mount("#app");
